@@ -10,12 +10,18 @@
                     <label for="title" class="form-label">Title</label>
                     <input type="title" class="form-control" {% if product %} value="{{ product.title }}" {% endif %}
                            name="title" id="title" aria-describedby="title">
+                    {% if form.title.errors %}
+                        <div class="form-text text-danger">{{ form.title.errors }}</div>
+                    {% endif %}
                 </div>
                 <div class="mb-3">
                     <label for="description" class="form-label">Description</label>
                     <textarea class="form-control" id="description"
                               name="description">{% if product %}{{ product.description }}{% endif %}
                     </textarea>
+                    {% if form.description.errors %}
+                        <div class="form-text text-danger">{{ form.description.errors }}</div>
+                    {% endif %}
                 </div>
                 <div class="mb-3">
                     <label for="categories" class="form-label">Categories</label>
@@ -25,7 +31,7 @@
                                     {% if product_categories %}
                                         {% for p_c in product_categories %}
                                             {% if p_c.category.id == category.id %}
-                                                selected
+                                    selected
                                             {% endif %}
                                         {% endfor %}
                                     {% endif %}>

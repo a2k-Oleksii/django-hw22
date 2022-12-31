@@ -1,21 +1,30 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.exceptions import PermissionDenied
 from .models import Product, Category, CategoryProduct
+from .forms import ProductForm
 
 
 def add_product(request):
     if request.user.is_authenticated:
         if request.method == "GET":
+            form = ProductForm()
             categories = Category.objects.all()
-            return render(request, 'products/add.html', {"categories": categories})
+            return render(request, 'products/add.html', {
+                "categories": categories,
+                "form": form
+            })
         else:
-            product = Product()
-            product.title = request.POST.get('title')
-            product.description = request.POST.get('description')
-            product.user = request.user
-            product.save()
-            update_product(request, product.id)
-            return redirect('/')
+            form = ProductForm(request.POST)
+            if form.is_valid():
+                product = Product()
+                product.title = request.POST.get('title')
+                product.description = request.POST.get('description')
+                product.user = request.user
+                product.save()
+                update_product(request, product.id)
+                return redirect('/')
+            else:
+                return render(request, 'products/add.html', {"form": form})
     else:
         return redirect('/')
 
