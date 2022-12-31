@@ -18,8 +18,8 @@ nav .user {
 }
 
 .card-img-top {
-    width: auto;
-    height: 250px;
+    width: max-content;
+    height: max-content;
     position: center;
 }
 
@@ -41,7 +41,7 @@ footer .container-blocks {
     align-items: center;
 }
 
-.card-list {
+.row {
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
